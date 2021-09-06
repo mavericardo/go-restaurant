@@ -32,8 +32,10 @@ const Dashboard = () => {
     }
   }
 
-  function handleDeleteFood() {
-    console.log('handleDeleteFood');
+  async function handleDeleteFood(id: number) {
+    await api.delete(`/foods/${id}`);
+    const foodsFiltered = foods.filter((food: any) => food.id !== id);
+    setFoods(foodsFiltered);
   }
 
   function handleEditFood() {
