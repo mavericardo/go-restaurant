@@ -38,16 +38,30 @@ const Dashboard = () => {
     setFoods(foodsFiltered);
   }
 
-  function handleEditFood() {
-    console.log('handleEditFood');
+  function handleEditFood(food: any) {
+    setEditingFood(food);
+    setEditModalOpen(true);
   }
 
-  function handleUpdateFood() {
-    console.log('handleUpdateFood');
+  async function handleUpdateFood(food: any) {
+    try {
+      const foodUpdated = await api.put(
+        `/foods/${editingFood.id}`,
+        { ...editingFood, ...food },
+      );
+
+      const foodsUpdated = foods.map((food: any) =>
+        food.id !== foodUpdated.data.id ? food : foodUpdated.data,
+      );
+
+      setFoods(foodsUpdated);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function toggleEditModal() {
-    console.log('toggleEditModal');
+    setEditModalOpen(!editModalOpen);
   }
 
   function toggleModal() {
@@ -65,12 +79,12 @@ const Dashboard = () => {
         handleAddFood={handleAddFood}
       />
 
-      {/* <ModalEditFood
+      <ModalEditFood
         isOpen={editModalOpen}
         setIsOpen={toggleEditModal}
         editingFood={editingFood}
         handleUpdateFood={handleUpdateFood}
-      /> */}
+      />
 
       <FoodsContainer data-testid="foods-list">
         {foods &&
