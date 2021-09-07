@@ -1,70 +1,64 @@
-import { Component, createRef } from 'react';
+import { SubmitHandler, FormHandles } from '@unform/core'
 import { FiCheckSquare } from 'react-icons/fi';
 
 import { Form } from './styles';
 import Modal from '../Modal';
 import Input from '../Input';
-import { useState } from 'react';
+import { useRef } from 'react';
+
+interface Food {
+  image: string,
+  name: string,
+  price: number,
+  description: string,
+}
 
 const ModalAddFood = ({ isOpen, setIsOpen, handleAddFood }: any) => {
-  const [image, setImage] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
+  const formRef = useRef<FormHandles>(null);
 
-  function handleButton() {
-    if (image === '') {
+  const handleSubmit: SubmitHandler<Food> = data => {
+    console.log(data);
+    if (data.image === '') {
       alert('Insira o link da imagem do prato');
       return;
     }
 
-    if (name === '') {
+    if (data.name === '') {
       alert('Insira o nome do prato');
       return;
     }
 
-    if (price === '') {
+    if (data.price === 0) {
       alert('Insira o preço do prato');
       return;
     }
 
-    if (description === '') {
+    if (data.description === '') {
       alert('Insira a descrição do prato');
       return;
     }
 
-    const food: any = {
-      image,
-      name,
-      price,
-      description
-    }
-
-    handleAddFood(food);
-
-    setImage('');
-    setName('');
-    setPrice('');
-    setDescription('');
+    handleAddFood(data);
 
     setIsOpen();
   }
 
+
   return (
     <>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Form>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Novo Prato</h1>
 
-          <Input name="image" icon="" placeholder="Cole o link aqui" onChange={(event: any) => setImage(event.target.value)} />
+          <Input name="image" icon="" placeholder="Cole o link aqui" />
 
-          <Input name="name" icon="" placeholder="Ex: Moda Italiana" onChange={(event: any) => setName(event.target.value)} />
+          <Input name="name" icon="" placeholder="Ex: Moda Italiana" />
 
-          <Input name="price" icon="" placeholder="Ex: 19.90" onChange={(event: any) => setPrice(event.target.value)} />
+          <Input name="price" defaultValue="0" icon="" placeholder="Ex: 19.90" />
 
-          <Input name="description" icon="" placeholder="Descrição" onChange={(event: any) => setDescription(event.target.value)} />
+          <Input name="description" icon="" placeholder="Descrição" />
 
-          <button type="submit" data-testid="add-food-button" onClick={handleButton}>
+          <button type="submit" data-testid="add-food-button">
             <p className="text">Adicionar Prato</p>
             <div className="icon">
               <FiCheckSquare size={24} />
