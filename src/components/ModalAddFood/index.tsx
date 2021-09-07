@@ -17,7 +17,6 @@ const ModalAddFood = ({ isOpen, setIsOpen, handleAddFood }: any) => {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit: SubmitHandler<Food> = data => {
-    console.log(data);
     if (data.image === '') {
       alert('Insira o link da imagem do prato');
       return;

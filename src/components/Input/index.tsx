@@ -9,8 +9,8 @@ import { useField } from '@unform/core';
 
 import { Container } from './styles';
 
-const Input = ({ name, icon: Icon, ...rest }) => {
-  const inputRef = useRef(null);
+const Input = ({ name, icon: Icon = "", ...rest }: any) => {
+  const inputRef: any = useRef(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -46,7 +46,7 @@ const Input = ({ name, icon: Icon, ...rest }) => {
         ref={inputRef}
         {...rest}
       />
-    </Container>
+    </Container >
   );
 };
 
