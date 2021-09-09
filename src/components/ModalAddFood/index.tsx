@@ -6,17 +6,12 @@ import Modal from '../Modal';
 import Input from '../Input';
 import { useRef } from 'react';
 
-interface Food {
-  image: string,
-  name: string,
-  price: number,
-  description: string,
-}
+import { ModelFood } from '../../types/food';
 
 const ModalAddFood = ({ isOpen, setIsOpen, handleAddFood }: any) => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit: SubmitHandler<Food> = data => {
+  const handleSubmit: SubmitHandler<ModelFood> = data => {
     if (data.image === '') {
       alert('Insira o link da imagem do prato');
       return;

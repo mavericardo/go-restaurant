@@ -6,21 +6,16 @@ import Modal from '../Modal';
 import Input from '../Input';
 import { SubmitHandler, FormHandles } from '@unform/core'
 
-interface Food {
-  image: string,
-  name: string,
-  price: number,
-  description: string,
-}
+import { ModelFood } from '../../types/food';
+
 
 const ModalEditFood = ({ isOpen, setIsOpen, handleUpdateFood, editingFood }: any) => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit: SubmitHandler<Food> = data => {
+  const handleSubmit: SubmitHandler<ModelFood> = data => {
     handleUpdateFood(data);
     setIsOpen();
   }
-
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
